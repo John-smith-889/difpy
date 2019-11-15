@@ -1,14 +1,13 @@
-# name of the package
+#=====================#
+# Name of the package #
+#=====================#
+
 name = "difpy"
 
 
-# Enable to import functions directly from difpy 
-# for egzample "import function from difpy"
-from .difpy import (
-  function_1,
-  function_2
-)
+#================================================#
+# Enable to import functions directly from difpy #
+#================================================#
 
-# or
-#from file1 import *
-#from file2 import *
+from difpy.hello_world import *
+from difpy.initialize import *
