@@ -24,11 +24,14 @@ Created on Wed Nov  6 05:47:09 2019
       
 """
 
+import difpy as dp
 import networkx as nx
 import numpy as np
 import random
 import matplotlib.pyplot as plt
 from sklearn.preprocessing import MinMaxScaler
+import statistics as st
+
 
 #==========================================#
 # Function for create graph and initialize #
@@ -251,6 +254,9 @@ def graph_init(n = 26, # number of nodes
     return G, pos
 
 
+
+
+
 #================================#
 # Function for drawing the graph #
 #================================#
@@ -315,3 +321,114 @@ def draw_graph(G, # graph
     if legend == True:
         plt.legend(numpoints = 1)
     
+
+
+
+#===========================#
+# Function for graph review #
+#===========================# 
+
+def graph_stats(G, draw_degree = True, show_attr = True, 
+                draw_graph = True):
+
+    """ 
+    Function for checking basic graph statistics, node attributes and
+    wages.
+    
+    Parameters
+    ----------
+    
+    G : graph
+        A networkx graph object.
+
+    show_attr : bool
+        Show nodes attributes and weights.
+            
+    draw_degree : bool
+        Draw nodes degree distribution.
+        
+    draw_graph : bool
+        Draw graph.
+        
+    Returns
+    -------
+    
+    dict_stat : dictionary
+        A dictionary with graph statistics.
+       
+    """    
+    
+    #===============================#
+    # Compute basic graph satistics #
+    #===============================# 
+    
+    nodes = len(G.nodes())
+
+    edges = len(G.edges())
+    
+    mean_degree = st.mean([v for k,v in nx.degree(G)])
+
+    avg_clustering_coef = nx.average_clustering(G, nodes=None, 
+                                                weight=None, 
+                                                count_zeros=True)
+    
+    avg_clustering_coef = round(avg_clustering_coef, 4)
+    # https://en.wikipedia.org/wiki/Clustering_coefficient
+    # https://networkx.github.io/documentation/stable/reference/algorithms/generated/networkx.algorithms.cluster.average_clustering.html#networkx.algorithms.cluster.average_clustering
+    # average of local clustering coefficients (for each node)
+        
+    transitivity = nx.transitivity(G) # fraction of all possible triangles
+    transitivity = round(transitivity, 4)
+
+    global dict_stat
+    dict_stat = {'nodes': nodes, 
+               'edges': edges,
+               'mean node degree': mean_degree,
+               'average clustering coefficient': avg_clustering_coef,
+               'transitivity': transitivity}
+
+    print('\n' + "General information:" + '\n')
+    for k,v in dict_stat.items():
+        print(k,': ', v)
+    
+    #=======================#
+    # Show nodes attributes #
+    #=======================#
+    
+    if show_attr == True:
+        print('\n' + "Node attributes:" + '\n')
+        for (u, v) in G.nodes.data():
+            print(u, v)     
+    
+    
+        print('\n' + "Sorted weights:" + '\n')
+        #global wages_list
+        #wages_list = []
+        for i,(u, v, wt) in enumerate(sorted(G.edges.data('weight'), key = lambda x: x[2])):
+            print(i, wt)
+            #wages_list.append((i, wt))
+    
+    
+    #============#
+    # Draw graph #
+    #============#
+    
+    if draw_graph == True:    
+        fig_01, ax_01 = plt.subplots() # enable to plot one by one
+                                       # in separate windows
+        dp.draw_graph(G = G, pos = pos)
+        
+    #==========================#
+    # Degree distribution plot #
+    #==========================#
+    
+    if draw_degree == True:
+        # degree distribution
+        degree_distribution = sorted([v for k,v in nx.degree(G)], reverse = True)
+        x = range(len(degree_distribution))    
+
+        fig_01, ax_01 = plt.subplots() # enable to plot one by one
+        plt.scatter(x, degree_distribution, marker='o', c= 'blue', alpha=0.5)
+        plt.ylabel('Node degree');
+        plt.xlabel('Node number');
+        plt.suptitle('Nodes degree distribution', fontsize=16)
