@@ -88,10 +88,6 @@ def graph_init(n = 26, # number of nodes
     # Create graph #
     #==============#
     
-    # Global G variable
-    global G
-    # Create global variable pos (later used also in simulation function)
-    global pos
     # Create basic watts-strogatz graph
     G = nx.watts_strogatz_graph(n = n, k = k, p = rewire_prob, seed=None)
     # Compute a position of graph elements
