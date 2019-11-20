@@ -428,3 +428,188 @@ def graph_stats(G, draw_degree = True, show_attr = True,
         plt.ylabel('Node degree');
         plt.xlabel('Node number');
         plt.suptitle('Nodes degree distribution', fontsize=16)
+
+
+#========================================#
+# Function for adding feature to a graph #
+#========================================# 
+
+def add_feature(G,
+                feature = None,
+                feature_type = None,
+                scaling = True,
+                decimals = 6,
+                show_attr = True, # show node weights and attributes
+                show_weights = True,
+                draw = False): 
+    """ Add feature to the graph.
+    
+    Function dedicated for adding existing feature to the graph 
+    with optional feature scaling.
+
+    
+    Parameters
+    ----------
+
+    feature : ndarray
+       ndarray in shape (<number of nodes/edges>, 1).
+
+    feature_type : string
+        Levels: "weights", "receptiveness", "extraversion", "engagement",
+                "state", or custom ones which may be used for measuring
+                feature importance in information propagation during
+                modelling.
+        
+    scaling : bool, optional
+        Scale weights to (0,1] range.
+    
+    decimals : integer, optional
+        Number of decimal digits due to rounding weights.
+        
+    show_attr : bool, optional
+        Show list of wages and other generated attributes of nodes.
+    
+    draw : bool, optional
+        Draw graph.
+
+
+    Returns
+    -------
+    G : graph
+        A networkx graph object.
+
+    """    
+    
+
+    # Values may be scaled so we cannot add it directly to graph,
+    # but after generation and scaling, and filling zeros with 0.000001
+    # for computation purposes
+    
+    # Only for numeric variables
+    if scaling == True:
+    
+        # Scale weights to [0,1] range
+        scaler = MinMaxScaler()
+        scaler.fit(feature)
+        feature = scaler.transform(feature)
+        feature = np.round(feature, decimals)
+        # eliminate zeros for computation purposes
+        for (x,y), i in np.ndenumerate(feature):
+            if i == 0:
+                feature[x,y] =0.000001
+                
+    
+    #======================#
+    # Add weights to graph #
+    #======================#
+    # Weights - are probabilities of contact between nodes of given social 
+    # network.
+    
+    if feature_type == "weights":
+    
+        # Add weights to the graph
+        for i, (u, v) in enumerate(G.edges()):
+            G[u][v]['weight'] = feature[i,0]
+
+    #====================================#
+    # Set node attribute - receptiveness #
+    #====================================#
+    
+    # Receptiveness - general parameter of each node, expressing how much 
+    # in general the actor is receptive in context of given social network.
+ 
+
+    if feature_type == "receptiveness":
+
+        # Add receptiveness parameter to nodes 
+        for v in G.nodes():
+            G.nodes[v]['receptiveness'] = feature[v,0]
+
+
+    #===================================#
+    # Set node attribute - extraversion #
+    #===================================#
+
+    # Extraversion is agent eagerness to express itself to other agents.
+
+
+    if feature_type == "extraversion":
+
+        # Add extraversion parameter to nodes 
+        for v in G.nodes():
+            G.nodes[v]['extraversion'] = feature[v,0]
+
+    #=================================#
+    # Set node attribute - engagement #
+    #=================================#
+
+    # Engagement - engagement with the information related topic, 
+    # strengthness of the experiences connected with information topic.
+    # How much the information is objectivly relevant for actor.
+
+
+    if feature_type == "engagement":
+
+        # Add engagement parameter to nodes 
+        for v in G.nodes():
+            G.nodes[v]['engagement'] = feature[v,0]
+    
+
+    #============================#
+    # Set node attribute - state #
+    #============================#
+    
+    # "State" Variable levels:
+    # * Unaware - is actor who did not internalized the information and 
+    #   is not able to pass it down.
+    # * Aware - is the actor who internalized the information and is able 
+    #   to pass it down.
+
+    if feature_type == "state":
+
+        # Add engagement parameter to nodes 
+        for v in G.nodes():
+            G.nodes[v]['state'] = feature[v,0]
+
+    #=======================================#
+    # Set node attribute - custom parameter #
+    #=======================================#
+    
+    if feature_type not in ["weights", "receptiveness", "extraversion", 
+                            "engagement", "state"]:
+        
+        # Add parameter to nodes 
+        for v in G.nodes():
+            G.nodes[v][feature_type] = feature[v,0]
+    
+    #=======================#
+    # Show nodes attributes #
+    #=======================#
+    
+    if show_attr == True:
+        print('\n' + "Nodes' attributes:" + '\n')
+        for (u, v) in G.nodes.data():
+            print(u, v)     
+    
+    
+    #=======================#
+    # Show nodes attributes #
+    #=======================#
+    
+    if show_weights == True:
+    
+        # Show weights
+        print('\n' + "Sorted weights:" + '\n')
+        for i,(u, v, wt) in enumerate(sorted(G.edges.data('weight'), 
+                                      key = lambda x: x[2])):
+            print(i, wt)
+
+
+    #============#
+    # Draw graph #
+    #============#
+   
+    if draw == True:    
+        dp.draw_graph(G = G, pos = pos)
+        
+    return G
