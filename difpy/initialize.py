@@ -5,7 +5,7 @@ Created on Wed Nov  6 05:47:09 2019
     package.
 
     There are possibilities to create sample difpy graph from scratch, 
-    or adjust existing NetworkX. Module consists also function for 
+    or adjust existing NetworkX graph. Module consists also function for 
     examine basic graph's properties.
     
     Objects
@@ -13,15 +13,16 @@ Created on Wed Nov  6 05:47:09 2019
     graph_init() : function
        A function creating graph ready for simulation purposes in difpy.
 
-    draw_colored_graph() : function
+    draw_graph() : function
        A function for draw colored graph.
 
-    graph_adjust() : function
-       A function adjusting networkx graph for simulation purposes in difpy.
-    
     graph_stats() : function
        A function returning basic statistics of a graph and a chart.
-      
+
+    add_feature() : function
+       A function dedicated for adding existing feature to the graph 
+       with optional feature scaling.      
+
 """
 
 import difpy as dp
@@ -430,6 +431,7 @@ def graph_stats(G, draw_degree = True, show_attr = True,
         plt.suptitle('Nodes degree distribution', fontsize=16)
 
 
+
 #========================================#
 # Function for adding feature to a graph #
 #========================================# 
@@ -613,3 +615,16 @@ def add_feature(G,
         dp.draw_graph(G = G, pos = pos)
         
     return G
+
+
+
+
+
+
+
+
+
+
+
+
+
