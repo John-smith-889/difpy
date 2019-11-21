@@ -619,12 +619,44 @@ def add_feature(G,
 
 
 
+#===========================================#
+# Function for adding random state to graph #
+#===========================================#
 
+def add_state_random(G, initiation_perc, show_attr = True, 
+                     draw_graph = True):    
+    
+    #===================#
+    # Random initiation #
+    #===================#
 
+    # Add 'unaware' state for all nodes
+    nx.set_node_attributes(G, 'unaware', 'state') # (G, value, key)
 
-
-
-
-
-
+    # Compute number of nodes
+    N = G.number_of_nodes()
+    # Return list of numbers of randomly aware agents
+    infected_agents_id = random.sample(population = range(0,N), 
+                                       k = int(N * initiation_perc))
+    # Set those nodes as aware
+    for v in infected_agents_id:
+        G.nodes[v]['state'] = 'aware'
+    
+    #========================#
+    # Show nodes' attributes #
+    #========================#
+    
+    if show_attr == True:
+        print("Node attributes:")
+        for (u, v) in G.nodes.data():
+            print(u, v)     
+    
+    #============#
+    # Draw graph #
+    #============#
+    
+    if draw_graph == True:    
+        fig_01, ax_01 = plt.subplots() # enable to plot one by one
+                                       # in separate windows
+        dp.draw_graph(G = G, pos = pos)
 
