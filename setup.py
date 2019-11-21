@@ -23,11 +23,11 @@ setuptools.setup(
 ###########################
 # Dependencies management #
 ###########################
-    installation of required packages:
-	install_requires=[
-        'numpy',
-	'networkx' #,
-     ] #,
+#    installation of required packages:
+#	install_requires=[
+#        'numpy',
+#	'networkx' #,
+#     ] #,
 #
 # # Installation of additional packages from custom dependency links:
 #    dependency_links=[
