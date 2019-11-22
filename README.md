@@ -26,7 +26,7 @@ pip install git+git://github.com/John-smith-889/difpy.git
 import difpy as dp
 
 
-### To do:
+### To do
 * simulation module
 * optimization module
 * modelling and feature importance module
@@ -36,5 +36,6 @@ import difpy as dp
 
 ### Contact 
 
-If you have questions about DifPy usage, want to report some bugs, or have some tips, mail me at everyday.normal.hacker(at)gmail.com &nbsp;
+If you have questions about DifPy usage, want to report some bugs, or have some tips, mail me at everyday.normal.hacker(at)gmail.com
+
 If you used DifPy in your reseach or in developing your software you may also contact me. If you would like, I may attach general describtion of your usecase on future extended DifPy page.
