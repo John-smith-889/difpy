@@ -1,3 +1,7 @@
+<div align="center">
+  <img src="images/logo.png"><br>
+</div>
+
 ## DifPy
 
 Python package for information diffusion investigation in social networks.
