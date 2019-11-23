@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="images/logo.png" width="20%" height="20%"><br>
+  <img src="images/logo.png" width="30%" height="30%"><br>
 </div>
 
 ## DifPy
