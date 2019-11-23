@@ -17,14 +17,21 @@ DifPy is available directly from the Github repository. To install DifPy,
 git installed on your local machine is needed.
 
 
-##### You may install DifPy on your local machine with the line below:
+#### You may install DifPy on your local machine with the line below:
 
-pip install git+git://github.com/John-smith-889/difpy.git
+```sh
+$ pip install git+git://github.com/John-smith-889/difpy.git
+```
 
-##### And import with the line below:
+#### And import with the line below:
 
+```python
 import difpy as dp
+```
 
+### Licence
+
+MIT
 
 ### To do
 * simulation module
