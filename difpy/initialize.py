@@ -229,7 +229,10 @@ def graph_init(n = 26, # number of nodes
     for v in infected_agents_id:
         G.nodes[v]['state'] = 'aware'
     
-    # Show nodes attributes
+    #=======================#
+    # Show nodes attributes #
+    #=======================#
+
     if show_attr == True:
         print("Node attributes:")
         for (u, v) in G.nodes.data():
@@ -244,7 +247,10 @@ def graph_init(n = 26, # number of nodes
         for u, v in dict_0.items():
             print(u, v) 
 
-    # Draw graph
+    #============#
+    # Draw graph #
+    #============#
+
     if draw == True:    
         draw_graph(G = G, pos = pos)
     # draw_colored_graph_2
@@ -388,9 +394,9 @@ def graph_stats(G, draw_degree = True, show_attr = True,
     for k,v in dict_stat.items():
         print(k,': ', v)
     
-    #=======================#
-    # Show nodes attributes #
-    #=======================#
+    #========================#
+    # Show nodes' attributes #
+    #========================#
     
     if show_attr == True:
         print('\n' + "Node attributes:" + '\n')
@@ -584,9 +590,9 @@ def add_feature(G,
         for v in G.nodes():
             G.nodes[v][feature_type] = feature[v,0]
     
-    #=======================#
-    # Show nodes attributes #
-    #=======================#
+    #========================#
+    # Show nodes' attributes #
+    #========================#
     
     if show_attr == True:
         print('\n' + "Nodes' attributes:" + '\n')
@@ -594,9 +600,9 @@ def add_feature(G,
             print(u, v)     
     
     
-    #=======================#
-    # Show nodes attributes #
-    #=======================#
+    #========================#
+    # Show nodes' attributes #
+    #========================#
     
     if show_weights == True:
     
@@ -625,6 +631,10 @@ def add_feature(G,
 
 def add_state_random(G, initiation_perc, show_attr = True, 
                      draw_graph = True):    
+    """
+
+
+    """
     
     #===================#
     # Random initiation #
