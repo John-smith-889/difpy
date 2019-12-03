@@ -21,7 +21,10 @@ Created on Wed Nov  6 05:47:09 2019
 
     add_feature() : function
        A function dedicated for adding existing feature to the graph 
-       with optional feature scaling.      
+       with optional feature scaling.     
+    
+    add_state_random(): function
+        A function assigning "aware" or "unaware" state for nodes.    
 
 """
 
@@ -44,7 +47,7 @@ def graph_init(n = 26, # number of nodes
                rewire_prob = 0.1, # probability of node rewrite 
                initiation_perc = 0.1, # percent of randomly informed nodes
                show_attr = True, # show node weights and attributes
-               draw = True): # probability of rewrite edge in random place
+               draw_graph = True): # probability of rewrite edge in random place
     """ Graph initialization with watts_strogatz_graph() function. 
 
     Create a difpy graph with added nodes attributes: relation wages, 
@@ -64,13 +67,13 @@ def graph_init(n = 26, # number of nodes
     rewire_prob : float
         probability of rewrite edge in random place
 
-    legend : bool, optional
-       Add legend to the graph which describes colored nodes.
+    initiation_perc : float
+       Percent of randomly aware nodes.
     
     show_attr : bool, optional
         Show list of wages and other generated attributes of nodes.
     
-    draw : bool, optional
+    draw_graph : bool, optional
         Draw graph.
 
 
@@ -251,8 +254,8 @@ def graph_init(n = 26, # number of nodes
     # Draw graph #
     #============#
 
-    if draw == True:    
-        draw_graph(G = G, pos = pos)
+    if draw_graph == True:    
+        dp.draw_graph(G = G, pos = pos)
     # draw_colored_graph_2
     return G, pos
 
@@ -331,7 +334,7 @@ def draw_graph(G, # graph
 # Function for graph review #
 #===========================# 
 
-def graph_stats(G, draw_degree = True, show_attr = True, 
+def graph_stats(G, pos, draw_degree = True, show_attr = True, 
                 draw_graph = True):
 
     """ 
@@ -411,16 +414,6 @@ def graph_stats(G, draw_degree = True, show_attr = True,
             print(i, wt)
             #wages_list.append((i, wt))
     
-    
-    #============#
-    # Draw graph #
-    #============#
-    
-    if draw_graph == True:    
-        fig_01, ax_01 = plt.subplots() # enable to plot one by one
-                                       # in separate windows
-        dp.draw_graph(G = G, pos = pos)
-        
     #==========================#
     # Degree distribution plot #
     #==========================#
@@ -436,6 +429,16 @@ def graph_stats(G, draw_degree = True, show_attr = True,
         plt.xlabel('Node number');
         plt.suptitle('Nodes degree distribution', fontsize=16)
 
+    #============#
+    # Draw graph #
+    #============#
+    
+    if draw_graph == True:    
+        fig_01, ax_01 = plt.subplots() # enable to plot one by one
+                                       # in separate windows
+        dp.draw_graph(G = G, pos = pos)
+
+
 
 
 #========================================#
@@ -443,13 +446,14 @@ def graph_stats(G, draw_degree = True, show_attr = True,
 #========================================# 
 
 def add_feature(G,
+                pos,
                 feature = None,
                 feature_type = None,
                 scaling = True,
                 decimals = 6,
                 show_attr = True, # show node weights and attributes
                 show_weights = True,
-                draw = False): 
+                draw_graph = False): 
     """ Add feature to the graph.
     
     Function dedicated for adding existing feature to the graph 
@@ -477,7 +481,7 @@ def add_feature(G,
     show_attr : bool, optional
         Show list of wages and other generated attributes of nodes.
     
-    draw : bool, optional
+    draw_graph : bool, optional
         Draw graph.
 
 
@@ -617,7 +621,7 @@ def add_feature(G,
     # Draw graph #
     #============#
    
-    if draw == True:    
+    if draw_graph == True:    
         dp.draw_graph(G = G, pos = pos)
         
     return G
@@ -629,9 +633,32 @@ def add_feature(G,
 # Function for adding random state to graph #
 #===========================================#
 
-def add_state_random(G, initiation_perc, show_attr = True, 
+def add_state_random(G, pos, initiation_perc, show_attr = True, 
                      draw_graph = True):    
-    """
+    """ Add state variable values to the graph's nodes.
+    
+    State is the variable which describe state of node - if it is aware 
+    of some information or not. 
+    
+    Parameters
+    ----------
+    G : graph
+        A networkx graph object.
+        
+    initiation_perc : float
+       Percent of randomly aware nodes.
+    
+    show_attr : bool, optional
+        Show list of wages and other generated attributes of nodes.
+    
+    draw_graph : bool, optional
+        Draw graph.
+
+
+    Returns
+    -------
+    G : graph
+        A networkx graph object.
 
 
     """
