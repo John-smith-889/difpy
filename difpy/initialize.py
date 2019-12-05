@@ -346,6 +346,9 @@ def graph_stats(G, pos, draw_degree = True, show_attr = True,
     
     G : graph
         A networkx graph object.
+        
+    pos : dictionary with 2 element ndarrays as values
+       Positions of nodes
 
     show_attr : bool
         Show nodes attributes and weights.
@@ -462,6 +465,12 @@ def add_feature(G,
     
     Parameters
     ----------
+    
+    G : graph
+        A networkx graph object.
+    
+    pos : dictionary with 2 element ndarrays as values
+       Positions of nodes
 
     feature : ndarray
        ndarray in shape (<number of nodes/edges>, 1).
@@ -644,6 +653,9 @@ def add_state_random(G, pos, initiation_perc, show_attr = True,
     ----------
     G : graph
         A networkx graph object.
+        
+    pos : dictionary with 2 element ndarrays as values
+       Positions of nodes
         
     initiation_perc : float
        Percent of randomly aware nodes.
