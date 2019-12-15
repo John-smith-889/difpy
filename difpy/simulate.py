@@ -26,10 +26,10 @@ def simulation_step(G, # NetworkX graph
                     kernel = 'weights',
                     custom_kernel = None,
                     WERE_multiplier = 10, 
-                    oblivion = True, 
+                    oblivion = False, 
                     engagement_enforcement = 1.01,
                     draw = False, 
-                    show_attrib = False):
+                    show_attr = False):
 
     """ Perform one simulation step of information diffusion.
     
@@ -162,7 +162,7 @@ def simulation_step(G, # NetworkX graph
                     #===============#
     
                     if kernel == 'custom':      
-                        prob_of_internalization = custom_kernel(n)
+                        prob_of_internalization = custom_kernel(n, neighbour)
                 
                     #============================#
                     # Attempt to internalization #
@@ -188,7 +188,7 @@ def simulation_step(G, # NetworkX graph
     #=======================#
     
     # Show nodes attributes
-    if show_attrib == True:
+    if show_attr == True:
         for (u, v) in G.nodes.data():
             print(u, v)     
     
@@ -203,5 +203,7 @@ def simulation_step(G, # NetworkX graph
 
 
     return G
+
+
 
 
