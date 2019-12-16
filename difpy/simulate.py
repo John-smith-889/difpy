@@ -15,7 +15,7 @@ import difpy as dp
 import numpy as np
 # import random # used only by difpy subfunction
 import matplotlib.pyplot as plt
-
+import copy
 
 #==============================#
 # Function one simulation step # ver 1
@@ -205,5 +205,115 @@ def simulation_step(G, # NetworkX graph
     return G
 
 
+
+#========================#
+# Run n simulation steps #
+#========================#
+
+def simulation_steps(G,  # graph object
+                     pos = None,  # positions of nodes
+                     n = 5, # number of simulation steps
+                     
+                     # wrapped args for simulation_step function
+                     kernel = 'weights', # simulation kernel
+                     custom_kernel = None, # custom simulation kernel
+                     WERE_multiplier = 10, # multiplier for WERE kernel
+                     oblivion = False, # enable information oblivion
+                     engagement_enforcement = 1.01,
+                     draw = False, # draw graph
+                     show_attr = False): # show attributes
+    
+    """ Perform n simulation steps of information diffusion for 
+        a given graph.
+    
+    Parameters
+    ----------
+
+    G : graph
+        A networkx graph object.
+        
+    n : integer
+        number of simulation steps for a given graph.
+        
+    draw : bool, optional
+        Draw graph.
+
+                     
+    Wrapped args for simulation_step function:
+        
+        
+    
+
+    Returns
+    -------
+    graph_list : list of lists of dictionaries
+        List with statistics about simulation diffusion process.
+        
+        Each element of primary lists is a list. Everyinner list contains
+        information about certain step of simulation, consists of information
+        about nodes.
+    
+    avg_aware_inc_per_step: list
+        Average increment of aware agents per one step of simulation.
+    
+    """        
+    
+    #=======================================#
+    # append nodes data from 0 step to list #
+    #=======================================#
+    
+    graph_list = []
+    graph_list.append(copy.deepcopy(list(G.nodes.data() ) )  )
+    
+
+    #===================#
+    # Run n simulations #
+    #===================#
+    
+    for i in range(n):
+        dp.simulation_step(G = G, 
+                           pos = pos, 
+                           
+                           kernel = kernel,
+                           custom_kernel = custom_kernel,
+                           WERE_multiplier = WERE_multiplier, 
+                           oblivion = oblivion, 
+                           engagement_enforcement = engagement_enforcement,
+                           draw = draw, 
+                           show_attr = show_attr)
+
+        # save nodes data to to list
+        graph_list.append(copy.deepcopy(list(G.nodes.data() ) )   )
+        
+    
+    #======================================================#
+    # Count aware agents before and after simulation steps #
+    #======================================================#
+    
+    # Check number of aware agents in 0 step
+    #global aware_first
+    aware_first = []
+    for i in range(len(graph_list[0])):
+        aware_first.append(graph_list[0][i][1]['state'])
+        aware_first_c = aware_first.count('aware')
+       
+        
+    # Check number of aware agents in the last step
+    #global aware_last
+    aware_last = []
+    for i in range(len(graph_list[0])):
+        aware_last.append(graph_list[5][i][1]['state']) # n is the last sim
+        aware_last_c = aware_last.count('aware')
+            
+    
+    #=================================#
+    # diffusion performance measuring #
+    #=================================#
+    
+    # equation for diffusion performance measuring
+    avg_aware_inc_per_step = (aware_last_c - aware_first_c) / n
+           
+    # show graph statistics
+    return graph_list, avg_aware_inc_per_step
 
 
