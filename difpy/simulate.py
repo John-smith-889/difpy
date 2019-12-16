@@ -317,3 +317,84 @@ def simulation_steps(G,  # graph object
     return graph_list, avg_aware_inc_per_step
 
 
+
+#==================================#
+# Function for simulation sequence # 
+#==================================#
+
+def simulation_sequence(G,  # networkX graph object
+                        pos, # positions of nodes
+                        n = 5, # number of steps in simulation
+                        sequence_len = 100, # sequence of simulations
+                              
+                        kernel = 'weights', # kernel type
+                        custom_kernel = None, # custom kernel function
+                        WERE_multiplier = 10, 
+                        oblivion = False, # information oblivion feature 
+                        engagement_enforcement = 1.01,
+                        draw = False, # draw graph
+                        show_attr = False): # show nodes attributes
+    
+    """ Perform n simulation steps of information diffusion for 
+        a given graph.
+    
+    Parameters
+    ----------
+
+    G : graph
+        A networkx graph object.
+        
+    n : integer
+        A number of simulation steps for a given graph.
+        
+    sequence_len : integer
+        A number of simulations to perform.
+        
+        
+        
+    Wrapped args for simulation_steps function:
+        
+        
+        
+
+    Returns
+    -------
+    graph_list : list of lists of dictionaries
+        List with statistics about simulation diffusion process.
+        
+        Each element of primary lists is a list. Everyinner list contains
+        information about certain step of simulation, consists of information
+        about nodes.
+    
+    avg_aware_inc_per_steps: list
+        Average increment of aware agents per simulation step for a sequence
+        of simulations.
+    
+    """ 
+    
+    # list for storing average increment of aware agents per step
+    avg_inc = []
+    
+    # Run sequence of simulationsa
+    for i in range(sequence_len):
+        G_zero = copy.deepcopy(G) # Create copy of Graph for simulation i
+        graph_list, avg_aware_inc_per_step \
+        = dp.simulation_steps(G_zero,  # !! @@@ change simulation_steps to simulation @ # networkX graph object
+                              pos, # positions of nodes
+                              n, # number of steps in simulation
+                              
+                              kernel, # kernel type
+                              custom_kernel, # custom kernel function
+                              WERE_multiplier, 
+                              oblivion, # information oblivion feature
+                              engagement_enforcement,
+                              draw, # draw graph
+                              show_attr) # show nodes attributes
+        
+        # Append average aware agents increment per step for simulation i
+        avg_inc.append(avg_aware_inc_per_step)
+    
+    # compute average aware agents increment per step for simulation sequence
+    avg_aware_inc = sum(avg_inc) / len(avg_inc)
+
+    return avg_aware_inc
