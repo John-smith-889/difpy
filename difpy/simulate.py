@@ -17,8 +17,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 import copy
 
-#==============================#
-# Function one simulation step # ver 1
+#=============================================================================#
+# Function one simulation step #
 #==============================#
 
 def simulation_step(G, # NetworkX graph
@@ -79,7 +79,8 @@ def simulation_step(G, # NetworkX graph
     Returns
     -------
     G : graph
-        A networkx graph object.
+        A modified networkx graph object is returned after simulation.
+
 
     """        
 
@@ -206,7 +207,7 @@ def simulation_step(G, # NetworkX graph
 
 
 
-#========================#
+#=============================================================================#
 # Run n simulation steps #
 #========================#
 
@@ -246,6 +247,9 @@ def simulation(G,  # graph object
 
     Returns
     -------
+    G : graph
+        A modified networkx graph object is returned after simulation.
+        
     graph_list : list of lists of dictionaries
         List with statistics about simulation diffusion process.
         
@@ -318,7 +322,7 @@ def simulation(G,  # graph object
 
 
 
-#==================================#
+#=============================================================================#
 # Function for simulation sequence # 
 #==================================#
 
