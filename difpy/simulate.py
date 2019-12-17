@@ -210,18 +210,18 @@ def simulation_step(G, # NetworkX graph
 # Run n simulation steps #
 #========================#
 
-def simulation_steps(G,  # graph object
-                     pos = None,  # positions of nodes
-                     n = 5, # number of simulation steps
-                     
-                     # wrapped args for simulation_step function
-                     kernel = 'weights', # simulation kernel
-                     custom_kernel = None, # custom simulation kernel
-                     WERE_multiplier = 10, # multiplier for WERE kernel
-                     oblivion = False, # enable information oblivion
-                     engagement_enforcement = 1.01,
-                     draw = False, # draw graph
-                     show_attr = False): # show attributes
+def simulation(G,  # graph object
+               pos = None,  # positions of nodes
+               n = 5, # number of simulation steps
+               
+               # wrapped args for simulation_step function
+               kernel = 'weights', # simulation kernel
+               custom_kernel = None, # custom simulation kernel
+               WERE_multiplier = 10, # multiplier for WERE kernel
+               oblivion = False, # enable information oblivion
+               engagement_enforcement = 1.01,
+               draw = False, # draw graph
+               show_attr = False): # show attributes
     
     """ Perform n simulation steps of information diffusion for 
         a given graph.
@@ -379,17 +379,17 @@ def simulation_sequence(G,  # networkX graph object
     for i in range(sequence_len):
         G_zero = copy.deepcopy(G) # Create copy of Graph for simulation i
         graph_list, avg_aware_inc_per_step \
-        = dp.simulation_steps(G_zero,  # !! @@@ change simulation_steps to simulation @ # networkX graph object
-                              pos, # positions of nodes
-                              n, # number of steps in simulation
+        = dp.simulation(G_zero,  # networkX graph object
+                        pos, # positions of nodes
+                        n, # number of steps in simulation
                               
-                              kernel, # kernel type
-                              custom_kernel, # custom kernel function
-                              WERE_multiplier, 
-                              oblivion, # information oblivion feature
-                              engagement_enforcement,
-                              draw, # draw graph
-                              show_attr) # show nodes attributes
+                        kernel, # kernel type
+                        custom_kernel, # custom kernel function
+                        WERE_multiplier, 
+                        oblivion, # information oblivion feature
+                        engagement_enforcement,
+                        draw, # draw graph
+                        show_attr) # show nodes attributes
         
         # Append average aware agents increment per step for simulation i
         avg_inc.append(avg_aware_inc_per_step)
