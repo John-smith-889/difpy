@@ -1,7 +1,7 @@
 """
 Created on Wed Nov  6 05:47:09 2019
 
-    Module enables graph initialization for simulations in difpy 
+    Module enables graph initialization for simulations in Difpy 
     package.
 
     There are possibilities to create sample difpy graph from scratch, 
@@ -11,20 +11,21 @@ Created on Wed Nov  6 05:47:09 2019
     Objects
     ----------
     graph_init() : function
-       A function creating graph ready for simulation purposes in difpy.
+       A function to create a graph ready for simulation purposes 
+       in difpy.
 
     draw_graph() : function
-       A function for draw colored graph.
+       A function to draw colored graph.
 
     graph_stats() : function
-       A function returning basic statistics of a graph and a chart.
+       A function to return basic statistics of a graph and a chart.
 
     add_feature() : function
-       A function dedicated for adding existing feature to the graph 
+       A function dedicated to add existing feature to the graph 
        with optional feature scaling.     
     
     add_state_random(): function
-        A function assigning "aware" or "unaware" state for nodes.    
+        A function to assign "aware" or "unaware" state for nodes.    
 
 """
 
@@ -37,7 +38,7 @@ from sklearn.preprocessing import MinMaxScaler
 import statistics as st
 
 
-#==========================================#
+#=============================================================================#
 # Function for create graph and initialize #
 #==========================================#
 
@@ -47,12 +48,15 @@ def graph_init(n = 26, # number of nodes
                rewire_prob = 0.1, # probability of node rewrite 
                initiation_perc = 0.1, # percent of randomly informed nodes
                show_attr = True, # show node weights and attributes
-               draw_graph = True): # probability of rewrite edge in random place
+               draw_graph = True): # probability of rewrite edge 
+                                   # in random place
+    
     """ Graph initialization with watts_strogatz_graph() function. 
 
-    Create a difpy graph with added nodes attributes: relation wages, 
-    awareness of an information, ...
-    The graph is ready to perform simulation.
+    Create a graph with added weights as edges attributes, and the 
+    following nodes attributes: extraversion, receptiveness, engagement.
+    
+    The graph is ready to perform simulation in difpy package.
     
     
     Parameters
@@ -84,7 +88,7 @@ def graph_init(n = 26, # number of nodes
 
     pos : dictionary with 2 element ndarrays as values
        Object contains positions of nodes in the graph chart. Pos is used 
-       to make drawnings of the graph during simulation. 
+       to draw the graph after simulation step. 
        
     """    
     
@@ -263,7 +267,7 @@ def graph_init(n = 26, # number of nodes
 
 
 
-#================================#
+#=============================================================================#
 # Function for drawing the graph #
 #================================#
 
@@ -285,7 +289,8 @@ def draw_graph(G, # graph
        A networkx graph
 
     pos : dictionary with 2 element ndarrays as values
-       Positions of nodes
+       Object contains positions of nodes in the graph chart. Pos is used 
+       to draw the graph after simulation step. 
 
     aware_color : string
        Specify the color of nodes aware of certain information.
@@ -330,7 +335,7 @@ def draw_graph(G, # graph
 
 
 
-#===========================#
+#=============================================================================#
 # Function for graph review #
 #===========================# 
 
@@ -348,7 +353,8 @@ def graph_stats(G, pos, draw_degree = True, show_attr = True,
         A networkx graph object.
         
     pos : dictionary with 2 element ndarrays as values
-       Positions of nodes
+       Object contains positions of nodes in the graph chart. Pos is used 
+       to draw the graph after simulation step. 
 
     show_attr : bool
         Show nodes attributes and weights.
@@ -444,7 +450,7 @@ def graph_stats(G, pos, draw_degree = True, show_attr = True,
 
 
 
-#========================================#
+#=============================================================================#
 # Function for adding feature to a graph #
 #========================================# 
 
@@ -470,7 +476,8 @@ def add_feature(G,
         A networkx graph object.
     
     pos : dictionary with 2 element ndarrays as values
-       Positions of nodes
+       Object contains positions of nodes in the graph chart. Pos is used 
+       to draw the graph after simulation step. 
 
     feature : ndarray
        ndarray in shape (<number of nodes/edges>, 1).
@@ -638,7 +645,7 @@ def add_feature(G,
 
 
 
-#===========================================#
+#=============================================================================#
 # Function for adding random state to graph #
 #===========================================#
 
@@ -655,7 +662,8 @@ def add_state_random(G, pos, initiation_perc, show_attr = True,
         A networkx graph object.
         
     pos : dictionary with 2 element ndarrays as values
-       Positions of nodes
+       Object contains positions of nodes in the graph chart. Pos is used 
+       to draw the graph after simulation step. 
         
     initiation_perc : float
        Percent of randomly aware nodes.
