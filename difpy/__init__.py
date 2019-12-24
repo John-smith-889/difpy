@@ -11,3 +11,5 @@ name = "difpy"
 
 from difpy.initialize import *
 from difpy.simulate import *
+from difpy.optimize import *
+from difpy.feature_importance import * 
