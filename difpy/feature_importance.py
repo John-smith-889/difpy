@@ -163,3 +163,144 @@ def nodes_score_simulation(
         
     return list_solution
 
+
+
+#=============================================================================#
+# feature_importance function #
+#=============================#
+
+def feature_importance(
+        G, # NetworkX graph
+        X, # Nodes attributes 
+        show = True, # Show features' performances
+        log_info_interval = 1, # interval of information log 
+                       
+        sequence_len = 200, # number of simulations in one sequence
+        n = 10, # number of simulation steps simulation
+                       
+        kernel = 'weights', # kernel type
+        custom_kernel = None, # custom kernel function
+        WERE_multiplier = 10, 
+        oblivion = False, # information oblivion feature 
+        engagement_enforcement = 1.00
+        ):
+
+    
+    """ Compute importace of features associated with nodes. It shows 
+    importance of features in context of information propagation
+    capability of nodes.
+    
+    
+    Parameters
+    ----------
+
+    G : graph
+        A networkx graph object.
+        
+    X: ndarray
+        Ndarray with nodes' features which importance will be investigated.
+        
+    log_info_interval: integer, optional
+        Interval between iterations to log simulations information 
+        in the console. If None, information is hidden.
+    
+        
+        
+    Parameters wrapped from simulation_sequence function:
+    -----------------------------------------------------
+    
+    sequence_len : integer
+        A number of simulations to perform in one sequence.
+        
+    
+    
+    Parameters wrapped from simulation_steps function:
+    --------------------------------------------------
+    
+    n : integer
+        A number of simulation steps for a given graph.
+        
+    
+    
+    Parameters wrapped from simulation_step function:
+    -------------------------------------------------
+          
+    kernel : string
+        Levels: "weights", "WERE", "custom"
+        
+        * weights - means that probability of information propagation is 
+            equals to bond value between actors
+        * WERE - probability of information propagation equals 
+            Weights-extraversion-receptiveness-engagement equation
+        * custom - probability of information propagation is computed 
+            with custom function
+            
+    engagement_enforcement : float
+        Enforcement of agent engagement by multiplier. 
+        If engagement_enforcement == 1, no enforcement occurs.
+        
+        1) Agent enforce its engagement after oblivion, 
+            (later its easier to internalize information again for this
+            agent, at least with WERE kernel)
+        2) Agent A enforce its engagement during information diffusion step,
+            when another agent B is trying to pass information towards 
+            agent A, but agent A is already aware.
+            
+    custom_kernel : function
+        Function which compute probability of information propagation
+        for each node in simulation step.
+    
+    WERE_multiplier : Float, optional
+        Multiplier used for scaling WERE kernel outcome.
+    
+    oblivion : bool, optional
+        Option which enable agents information oblivion. 
+        
+
+        
+    Returns
+    -------
+    feature_importances : list of tuples
+        List of tuples with nodes' numbers/names and centrality values.
+        
+    
+    """        
+
+    #=========================#
+    # Compute score for nodes #
+    #=========================#
+    
+    Y = nodes_score_simulation(G,
+                    log_info_interval, # interval of information log 
+                       
+                    n, # number of simulation steps in simulation
+                    sequence_len, # number of simulations in one sequence
+                       
+                    kernel, # kernel type
+                    custom_kernel, # custom kernel function
+                    WERE_multiplier, 
+                    oblivion, # information oblivion feature 
+                    engagement_enforcement
+                    )
+
+    X_train, X_test, Y_train, Y_test \
+    = train_test_split(X, Y, test_size = 0.20, random_state = 10)
+
+    
+    # Data modelling
+    model_01 = XGBRegressor(objective='reg:squarederror')
+    model_01.fit(X_train, Y_train)
+
+
+    # feature importance
+    feature_importances = model_01.feature_importances_
+    
+    # Model evaluation 
+    # ---------
+    
+    if show == True:
+        print("Feature importances:")
+        for i, i2 in enumerate(feature_importances):
+            print("Variable", i+1, ":", i2)
+
+    return feature_importances
