@@ -17,8 +17,6 @@ from sklearn.model_selection import train_test_split
 
 def nodes_score_simulation(
         G,
-        number_of_nodes = 3, # number of nodes to seed
-        number_of_iter = 100, # number of iterations 
         log_info_interval = None, # interval of information log 
                
         n = 5, # number of simulation steps in simulation
@@ -32,8 +30,8 @@ def nodes_score_simulation(
         ): 
                 
     
-    """ Show n best nodes for information diffusion in a graph. 
-    Random search method is used to optimization.
+    """ Compute nodes information propagation capability.
+    
     
     Parameters
     ----------
@@ -97,12 +95,13 @@ def nodes_score_simulation(
     oblivion : bool, optional
         Option which enable agents information oblivion. 
         
-
         
     Returns
     -------
-    n_best_nodes : list of tuples
-        List of tuples with nodes' numbers/names and centrality values.
+    list_solution : list
+        List with nodes information propagation capabilities. Each value 
+        is an average increment of aware nodes per one simulation step
+        for each node.
         
     
     """        
@@ -260,8 +259,9 @@ def feature_importance(
         
     Returns
     -------
-    feature_importances : list of tuples
-        List of tuples with nodes' numbers/names and centrality values.
+    feature_importances : ndarray
+        Ndarray with feature importance for each variable.
+        Feature importance is computed with xgboost package.
         
     
     """        
@@ -299,7 +299,9 @@ def feature_importance(
     # ---------
     
     if show == True:
+        print("")
         print("Feature importances:")
+        print("")
         for i, i2 in enumerate(feature_importances):
             print("Variable", i+1, ":", i2)
 
