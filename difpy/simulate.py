@@ -24,14 +24,15 @@ import copy
 def simulation_step(G, # NetworkX graph
                     pos = None,
                     kernel = 'weights',
+                    engagement_enforcement = 1.00,
                     custom_kernel = None,
                     WERE_multiplier = 10, 
                     oblivion = False, 
-                    engagement_enforcement = 1.01,
                     draw = False, 
                     show_attr = False):
 
-    """ Perform one simulation step of information diffusion.
+    """ Perform one simulation step of information diffusion 
+        in a graph G.
     
     
     Parameters
@@ -40,10 +41,13 @@ def simulation_step(G, # NetworkX graph
     G : graph
         A networkx graph object.
         
-        To use default information propagation kernels, its nodes need 
-        to have weights, and extraversion, receptiveness, engagement 
-        parameters.
-
+        To use default WERE information propagation kernel, nodes of G 
+        need to have extraversion, receptiveness, engagement parameters.
+        
+    pos : dictionary with 2 element ndarrays as values
+       Object contains positions of nodes in the graph chart. Pos is used 
+       to draw the graph after simulation step.
+    
     kernel : string
         Levels: "weights", "WERE", "custom"
         
@@ -53,25 +57,28 @@ def simulation_step(G, # NetworkX graph
             Weights-extraversion-receptiveness-engagement equation
         * custom - probability of information propagation is computed 
             with custom function
-        
-    WERE_multiplier : Float, optional
-        Multiplier used for scaling WERE kernel outcome.
-    
-    oblivion : bool, optional
-        Option which enable agents information oblivion. 
-        
-    engagement_enforcement : Float
+            
+    engagement_enforcement : float
         Enforcement of agent engagement by multiplier. 
         If engagement_enforcement == 1, no enforcement occurs.
         
         1) Agent enforce its engagement after oblivion, 
             (later its easier to internalize information again for this
             agent, at least with WERE kernel)
-        2) Agent A enforce its engagement, during information diffusion step,
+        2) Agent A enforce its engagement during information diffusion step,
             when another agent B is trying to pass information towards 
             agent A, but agent A is already aware.
-        
+            
+    custom_kernel : function
+        Function which compute probability of information propagation
+        for each node in simulation step.
     
+    WERE_multiplier : Float, optional
+        Multiplier used for scaling WERE kernel outcome.
+    
+    oblivion : bool, optional
+        Option which enable agents information oblivion. 
+        
     draw : bool, optional
         Draw graph.
 
@@ -236,14 +243,41 @@ def simulation(G,  # graph object
     n : integer
         number of simulation steps for a given graph.
         
+    
+    Parameters wrapped from simulation_step function:
+    -------------------------------------------------
+        
+    kernel : string
+        Levels: "weights", "WERE", "custom"
+        
+        * weights - means that probability of information propagation is 
+            equals to bond value between actors
+        * WERE - probability of information propagation equals 
+            Weights-extraversion-receptiveness-engagement equation
+        * custom - probability of information propagation is computed 
+            with custom function
+        
+    WERE_multiplier : Float, optional
+        Multiplier used for scaling WERE kernel outcome.
+    
+    oblivion : bool, optional
+        Option which enable agents information oblivion. 
+        
+    engagement_enforcement : float
+        Enforcement of agent engagement by multiplier. 
+        If engagement_enforcement == 1, no enforcement occurs.
+        
+        1) Agent enforce its engagement after oblivion, 
+            (later its easier to internalize information again for this
+            agent, at least with WERE kernel)
+        2) Agent A enforce its engagement, during information diffusion step,
+            when another agent B is trying to pass information towards 
+            agent A, but agent A is already aware.
+
     draw : bool, optional
         Draw graph.
 
-                     
-    Wrapped args for simulation_step function:
-        
-        
-    
+                            
 
     Returns
     -------
@@ -301,14 +335,17 @@ def simulation(G,  # graph object
         aware_first.append(graph_list[0][i][1]['state'])
         aware_first_c = aware_first.count('aware')
        
+       # graph_list[0][1][1]['state']
         
     # Check number of aware agents in the last step
     #global aware_last
     aware_last = []
+    graph_list_len = len(graph_list) - 1
     for i in range(len(graph_list[0])):
-        aware_last.append(graph_list[5][i][1]['state']) # n is the last sim
+        aware_last.append(graph_list[graph_list_len][i][1]['state']) # n is the last sim
         aware_last_c = aware_last.count('aware')
             
+        #graph_list[5][0][1]['state']
     
     #=================================#
     # diffusion performance measuring #
@@ -322,12 +359,12 @@ def simulation(G,  # graph object
 
 
 
+
 #=============================================================================#
 # Function for simulation sequence # 
 #==================================#
 
 def simulation_sequence(G,  # networkX graph object
-                        pos, # positions of nodes
                         n = 5, # number of steps in simulation
                         sequence_len = 100, # sequence of simulations
                               
@@ -342,49 +379,80 @@ def simulation_sequence(G,  # networkX graph object
     """ Perform n simulation steps of information diffusion for 
         a given graph.
     
+    
     Parameters
     ----------
 
     G : graph
         A networkx graph object.
         
-    n : integer
-        A number of simulation steps for a given graph.
-        
     sequence_len : integer
-        A number of simulations to perform.
+        A number of simulations to perform in one sequence.
         
         
         
-    Wrapped args for simulation_steps function:
+    Parameters wrapped from simulation function:
+    --------------------------------------------
         
+    n : integer
+        number of simulation steps for a given graph.
         
+    
+    
+    Parameters wrapped from simulation_step function:
+    -------------------------------------------------
         
-
+    kernel : string
+        Levels: "weights", "WERE", "custom"
+        
+        * weights - means that probability of information propagation is 
+            equals to bond value between actors
+        * WERE - probability of information propagation equals 
+            Weights-extraversion-receptiveness-engagement equation
+        * custom - probability of information propagation is computed 
+            with custom function
+        
+    WERE_multiplier : Float, optional
+        Multiplier used for scaling WERE kernel outcome.
+    
+    oblivion : bool, optional
+        Option which enable agents information oblivion. 
+        
+    engagement_enforcement : float
+        Enforcement of agent engagement by multiplier. 
+        If engagement_enforcement == 1, no enforcement occurs.
+        
+        1) Agent enforce its engagement after oblivion, 
+            (later its easier to internalize information again for this
+            agent, at least with WERE kernel)
+        2) Agent A enforce its engagement, during information diffusion step,
+            when another agent B is trying to pass information towards 
+            agent A, but agent A is already aware.
+        
+    
     Returns
     -------
-    graph_list : list of lists of dictionaries
-        List with statistics about simulation diffusion process.
-        
-        Each element of primary lists is a list. Everyinner list contains
-        information about certain step of simulation, consists of information
-        about nodes.
     
-    avg_aware_inc_per_steps: list
+    avg_aware_inc: float
         Average increment of aware agents per simulation step for a sequence
         of simulations.
+    
     
     """ 
     
     # list for storing average increment of aware agents per step
     avg_inc = []
     
-    # Run sequence of simulationsa
+    # Need to pass this arg for bug fixing
+    pos = None
+    # simulation f. needs this arg even if its set default as none
+    
+    # Run sequence of simulations
     for i in range(sequence_len):
         G_zero = copy.deepcopy(G) # Create copy of Graph for simulation i
         graph_list, avg_aware_inc_per_step \
         = dp.simulation(G_zero,  # networkX graph object
-                        pos, # positions of nodes
+                        pos, # position of nodes
                         n, # number of steps in simulation
                               
                         kernel, # kernel type
