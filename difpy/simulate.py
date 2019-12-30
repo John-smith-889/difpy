@@ -1,12 +1,31 @@
 """
 Created on Thu Dec 12 01:02:53 2019
 
-    Module enables simulation in Difpy package.
+
+    Module enables simulations in Difpy package on NetworkX graphs.
+
+    There are possibilities to perform singular simulation step,
+    whole simulation or simulation sequence. With those functions 
+    we may investigate how informations spread in certain graph.
+    In simulation step function, and simulation function we get graph's
+    nodes's properties fingerprints from all steps of simulation
+    as an output. In simulation sequence function we get statistics of 
+    information spreading as an output.
+    
 
     Objects
     ----------
     simulation_step() : function
-       A function creating graph ready for simulation purposes in difpy.
+        A function performs one step of simulation.
+
+    
+    simulation() : function
+        A function performs one simulation with multiple steps.
+       
+    
+    simulation_sequence() : function
+        A function performs one sequence of simulations.
+
 
 """
 
