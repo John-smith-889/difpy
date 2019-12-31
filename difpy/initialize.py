@@ -1,12 +1,13 @@
 """
 Created on Wed Nov  6 05:47:09 2019
 
+
     Module enables graph initialization for simulations in Difpy 
     package.
 
-    There are possibilities to create sample difpy graph from scratch, 
-    or adjust existing NetworkX graph. Module consists also function for 
-    examine basic graph's properties.
+    There are possibilities to create sample NetworkX graph from scratch, 
+    or adjust existing NetworkX graph. Module consists function to 
+    examine basic graph's properties also.
     
     Objects
     ----------
