@@ -15,15 +15,15 @@ Created on Thu Dec 12 01:02:53 2019
 
     Objects
     ----------
-    simulation_step() : function
+    simulation_step : function
         A function performs one step of simulation.
 
     
-    simulation() : function
+    simulation : function
         A function performs one simulation with multiple steps.
        
     
-    simulation_sequence() : function
+    simulation_sequence : function
         A function performs one sequence of simulations.
 
 
