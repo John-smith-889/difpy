@@ -38,11 +38,16 @@ import difpy as dp
 MIT
 
 ### To do
-* simulation module
-* optimization module
-* modelling and feature importance module
+* Additional optimization metaheuristics functions
+* Additional methods of computing diffusion speed
+* Implement paralell computing for better performance
+* Extend unit tests fot better code coverage
+* Test big size networks 1 million + nodes
 * Extended documentation 
 * Examples of code usage
+* \/ simulation module
+* \/ optimization module
+* \/ modelling and feature importance module
 
 
 ### Contact 
