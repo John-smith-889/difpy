@@ -1,6 +1,24 @@
 """
 Created on Thu Dec 19 22:29:52 2019
 
+
+    Module enables computing score of information spreding capability
+    for each node, and check correlations between this computed score 
+    and other features associated with nodes.
+    
+
+    Objects
+    ----------
+    nodes_score_simulation : function
+        A function computes score of information spreding capability
+        for each node.
+
+    
+    feature_importance : function
+        A function computes correlations between nodes' scores variable 
+        and nodes features.
+    
+
 """
 
 
