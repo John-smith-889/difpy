@@ -290,8 +290,7 @@ def simulation(G,  # graph object
             (later its easier to internalize information again for this
             agent, at least with WERE kernel)
         2) Agent A enforce its engagement, during information diffusion step,
-            when another agent B is trying to pass information towards 
-            agent A, but agent A is already aware.
+            when agent A is already informed.
 
     draw : bool, optional
         Draw graph.
