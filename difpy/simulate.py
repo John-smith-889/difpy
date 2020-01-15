@@ -266,6 +266,10 @@ def simulation(G,  # graph object
     Parameters wrapped from simulation_step function:
     -------------------------------------------------
         
+    pos : dictionary with 2 element ndarrays as values
+       Object contains positions of nodes in the graph chart. Pos is used 
+       to draw the graph after simulation step.
+    
     kernel : string
         Levels: "weights", "WERE", "custom"
         
@@ -275,12 +279,6 @@ def simulation(G,  # graph object
             Weights-extraversion-receptiveness-engagement equation
         * custom - probability of information propagation is computed 
             with custom function
-        
-    WERE_multiplier : Float, optional
-        Multiplier used for scaling WERE kernel outcome.
-    
-    oblivion : bool, optional
-        Option which enable agents information oblivion. 
         
     engagement_enforcement : float
         Enforcement of agent engagement by multiplier. 
@@ -292,11 +290,20 @@ def simulation(G,  # graph object
         2) Agent A enforce its engagement, during information diffusion step,
             when agent A is already informed.
 
+    custom_kernel : function
+        Function which compute probability of information propagation
+        for each node in simulation step.
+    
+    WERE_multiplier : Float, optional
+        Multiplier used for scaling WERE kernel outcome.
+    
+    oblivion : bool, optional
+        Option which enable agents information oblivion. 
+        
     draw : bool, optional
         Draw graph.
 
                             
-
     Returns
     -------
     G : graph
