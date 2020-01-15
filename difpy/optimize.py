@@ -9,7 +9,7 @@ Created on Tue Dec 17 01:12:39 2019
     Objects
     ----------
     optimize_centrality() : function
-        A function computes centrality with given networkx function 
+        A function computes closeness centrality with given networkx function 
         for choosen set of nodes.
 
     
