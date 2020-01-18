@@ -71,7 +71,7 @@ def nodes_score_simulation(
         
     
     
-    Parameters wrapped from simulation_steps function:
+    Parameters wrapped from simulation function:
     --------------------------------------------------
     
     n : integer
