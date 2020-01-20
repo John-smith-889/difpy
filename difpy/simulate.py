@@ -78,13 +78,13 @@ def simulation_step(G, # NetworkX graph
             with custom function
             
     engagement_enforcement : float
-        Enforcement of agent engagement by multiplier. 
-        If engagement_enforcement == 1, no enforcement occurs.
+        Reinforcement of agent engagement by multiplier. 
+        If engagement_enforcement == 1, no reinforcement occurs.
         
-        1) Agent enforce its engagement after oblivion, 
+        1) Agent reinforce its engagement after oblivion, 
             (later its easier to internalize information again for this
             agent, at least with WERE kernel)
-        2) Agent A enforce its engagement during information diffusion step,
+        2) Agent A reinforce its engagement during information diffusion step,
             when another agent B is trying to pass information towards 
             agent A, but agent A is already aware.
             
@@ -207,7 +207,7 @@ def simulation_step(G, # NetworkX graph
                     G.nodes[neighbour]['engagement'] = \
                     np.round(G.nodes[neighbour]['engagement'] * \
                              engagement_enforcement, 6)
-                        # enforcing already informed actors
+                        # reinforcing already informed actors
 
     
     #=======================#
@@ -281,13 +281,13 @@ def simulation(G,  # graph object
             with custom function
         
     engagement_enforcement : float
-        Enforcement of agent engagement by multiplier. 
-        If engagement_enforcement == 1, no enforcement occurs.
+        Reinforcement of agent engagement by multiplier. 
+        If engagement_enforcement == 1, no reinforcement occurs.
         
-        1) Agent enforce its engagement after oblivion, 
+        1) Agent reinforce its engagement after oblivion, 
             (later its easier to internalize information again for this
             agent, at least with WERE kernel)
-        2) Agent A enforce its engagement, during information diffusion step,
+        2) Agent A reinforce its engagement, during information diffusion step,
             when agent A is already informed.
 
     custom_kernel : function
@@ -444,13 +444,13 @@ def simulation_sequence(G,  # networkX graph object
         Option which enable agents information oblivion. 
         
     engagement_enforcement : float
-        Enforcement of agent engagement by multiplier. 
-        If engagement_enforcement == 1, no enforcement occurs.
+        Reinforcement of agent engagement by multiplier. 
+        If engagement_enforcement == 1, no reinforcement occurs.
         
-        1) Agent enforce its engagement after oblivion, 
+        1) Agent reinforce its engagement after oblivion, 
             (later its easier to internalize information again for this
             agent, at least with WERE kernel)
-        2) Agent A enforce its engagement, during information diffusion step,
+        2) Agent A reinforce its engagement, during information diffusion step,
             when another agent B is trying to pass information towards 
             agent A, but agent A is already aware.
         
