@@ -390,7 +390,11 @@ def graph_stats(G, pos, draw_degree = True, show_attr = True,
     
     avg_clustering_coef = round(avg_clustering_coef, 4)
     # https://en.wikipedia.org/wiki/Clustering_coefficient
-    # https://networkx.github.io/documentation/stable/reference/algorithms/generated/networkx.algorithms.cluster.average_clustering.html#networkx.algorithms.cluster.average_clustering
+
+    # https://networkx.github.io/documentation/stable/reference/
+    # algorithms/generated/networkx.algorithms.cluster.average_
+    # clustering.html#networkx.algorithms.cluster.average_clustering
+
     # average of local clustering coefficients (for each node)
         
     transitivity = nx.transitivity(G) # fraction of all possible triangles
