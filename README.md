@@ -45,9 +45,11 @@ MIT
 * Test big size networks 1 million + nodes
 * Extended documentation 
 * Examples of code usage
-* \/ simulation module
-* \/ optimization module
-* \/ modelling and feature importance module
+
+### Done
+* simulation module
+* optimization module
+* modelling and feature importance module
 
 
 ### Contact 
