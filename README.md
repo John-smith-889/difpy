@@ -33,6 +33,25 @@ $ pip install git+git://github.com/John-smith-889/difpy.git
 import difpy as dp
 ```
 
+### Tutorials
+
+Simple Jupyter notebook example of DifPy usage you may find in present
+repository under name 'difpy_case_pl.ipynb'.
+
+As far package has been used to educational purposes on Warsaw School of Economics on Multi-agent Modelling laboratories.
+Script from labs you may fork [here](https://github.com/KrainskiL/MW_L1920/tree/master/Zajecia2).
+
+
+### Documentation
+
+To read about DifPy functions you may look into 
+functions' docstrings written in numpy style.
+
+To read more you may look also at an 
+[article](https://john-smith-889.github.io/blog/social%20network%20analysis/difpy-diffusion-on-graphs-in-python-PL.html)
+about the package on the blog.
+
+
 ### Licence
 
 MIT
@@ -55,5 +74,5 @@ MIT
 ### Contact 
 
 If you have questions about DifPy usage, want to report some bugs, or have some tips, mail me at everyday.normal.hacker(at)gmail.com
-
-If you used DifPy in your reseach or in developing your software you may also contact me. If you would like, I may attach general describtion of your usecase on future extended DifPy page.
+If you used DifPy in your reseach or in developing your software you may also contact me. 
+If you would like, I may attach general describtion of your usecase on future extended DifPy page.
